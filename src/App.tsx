@@ -62,88 +62,71 @@ class App extends React.Component<any, IState> {
                 <Container key={`${this.state.language}`}>
                     <Switch>
                         <Route exact={true} path="/:region(JP|NA)/buff/:id([0-9]+)" render={props => {
-                            const region = props.match.params.region,
-                                id = props.match.params.id,
-                                key = `${region}-${id}`;
+                            const { region, id } = props.match.params
                             return (
                                 <Suspense fallback={<Loading />}>
-                                    <BuffPage key={key} region={region} id={id}/>
+                                    <BuffPage key={`${region}-${id}`} region={region} id={id}/>
                                 </Suspense>
                             );
                         }}/>
                         <Route exact={true} path="/:region(JP|NA)/craft-essence/:id([0-9]+)" render={props => {
-                            const region = props.match.params.region,
-                                id = props.match.params.id,
-                                key = `${region}-${id}`;
+                            const { region, id } = props.match.params
                             return (
                                 <Suspense fallback={<Loading />}>
-                                    <CraftEssencePage key={key} region={region} id={id}/>
+                                    <CraftEssencePage key={`${region}-${id}`} region={region} id={id}/>
                                 </Suspense>
                             );
                         }}/>
                         <Route exact={true} path="/:region(JP|NA)/func/:id([0-9]+)" render={props => {
-                            const region = props.match.params.region,
-                                id = props.match.params.id,
-                                key = `${region}-${id}`;
+                            const { region, id } = props.match.params
                             return (
                                 <Suspense fallback={<Loading />}>
-                                    <FuncPage key={key} region={region} id={id}/>
+                                    <FuncPage key={`${region}-${id}`} region={region} id={id}/>
                                 </Suspense>
                             );
                         }}/>
                         <Route exact={true} path="/:region(JP|NA)/mystic-code/:id([0-9]+)" render={props => {
-                            const region = props.match.params.region,
-                                id = props.match.params.id,
-                                key = `${region}-${id}`;
+                            const { region, id } = props.match.params
                             return (
                                 <Suspense fallback={<Loading />}>
-                                    <MysticCodePage key={key} region={region} id={id}/>
+                                    <MysticCodePage key={`${region}-${id}`} region={region} id={id}/>
                                 </Suspense>
                             );
                         }}/>
                         <Route exact={true} path="/:region(JP|NA)/noble-phantasm/:id([0-9]+)" render={props => {
-                            const region = props.match.params.region,
-                                id = props.match.params.id,
-                                key = `${region}-${id}`;
+                            const { region, id } = props.match.params
                             return (
                                 <Suspense fallback={<Loading />}>
-                                    <NoblePhantasmPage key={key} region={region} id={id}/>
+                                    <NoblePhantasmPage key={`${region}-${id}`} region={region} id={id}/>
                                 </Suspense>
                             );
                         }}/>
                         <Route exact={true} path="/:region(JP|NA)/quest/:id([0-9]+)/:phase([0-9]+)" render={props => {
-                            const region = props.match.params.region,
-                                id = props.match.params.id,
-                                phase = props.match.params.phase,
-                                key = `${region}-${id}-${phase}`;
+                            const { region, id, phase } = props.match.params
                             return (
                                 <Suspense fallback={<Loading />}>
-                                    <QuestPage key={key} region={region} id={id} phase={phase}/>
+                                    <QuestPage key={`${region}-${id}-${phase}`} region={region} id={id} phase={phase}/>
                                 </Suspense>
                             )
                         }}/>
                         <Route exact={true} path="/:region(JP|NA)/servant/:id([0-9]+)" render={props => {
-                            const region = props.match.params.region,
-                                id = props.match.params.id,
-                                key = `${region}-${id}`;
+                            const { region, id } = props.match.params
                             return (
                                 <Suspense fallback={<Loading />}>
-                                    <ServantPage key={key} region={region} id={id}/>;
+                                    <ServantPage key={`${region}-${id}`} region={region} id={id}/>;
                                 </Suspense>
                             )
                         }}/>
                         <Route exact={true} path="/:region(JP|NA)/skill/:id([0-9]+)" render={props => {
-                            const region = props.match.params.region,
-                                id = props.match.params.id,
-                                key = `${region}-${id}`;
+                            const { region, id } = props.match.params
                             return (
                                 <Suspense fallback={<Loading />}>
-                                    <SkillPage key={key} region={region} id={id}/>
+                                    <SkillPage key={`${region}-${id}`} region={region} id={id}/>
                                 </Suspense>
                             )
                         }}/>
                         <Route exact={true} path="/:region(JP|NA)/craft-essences" render={props => {
-                            const region = props.match.params.region;
+                            const { region } = props.match.params;
                             return (
                                 <Suspense fallback={<Loading />}>
                                     <CraftEssencesPage key={region} region={region}/>
@@ -151,7 +134,7 @@ class App extends React.Component<any, IState> {
                             );
                         }}/>
                         <Route exact={true} path="/:region(JP|NA)/mystic-codes" render={props => {
-                            const region = props.match.params.region;
+                            const { region } = props.match.params;
                             return (
                                 <Suspense fallback={<Loading />}>
                                     <MysticCodesPage key={region} region={region}/>
@@ -159,19 +142,15 @@ class App extends React.Component<any, IState> {
                             )
                         }}/>
                         <Route exact={true} path="/:region(JP|NA)/servants" render={props => {
-                            const region = props.match.params.region;
+                            const { region } = props.match.params;
                             return (
                                 <Suspense fallback={<Loading />}>
                                     <ServantsPage key={region} region={region}/>
                                 </Suspense>
                             )
                         }}/>
-                        <Route path="/" exact={true} render={props => {
-                            return <HomePage/>;
-                        }}/>
-                        <Route path="*" exact={true} render={props => {
-                            return <ErrorStatus/>;
-                        }}/>
+                        <Route path="/" exact={true} component={HomePage}/>
+                        <Route path="*" exact={true} component={ErrorStatus}/>
                     </Switch>
                 </Container>
             </Router>
