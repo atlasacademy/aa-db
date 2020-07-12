@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React from 'react';
+import React, { Suspense } from 'react';
 import {Container} from "react-bootstrap";
 import {HashRouter as Router, Route, Switch,} from "react-router-dom";
 import ErrorStatus from "./Component/ErrorStatus";
@@ -13,11 +13,16 @@ import MysticCodePage from "./Page/MysticCodePage";
 import MysticCodesPage from "./Page/MysticCodesPage";
 import NoblePhantasmPage from "./Page/NoblePhantasmPage";
 import QuestPage from "./Page/QuestPage";
-import ServantPage from "./Page/ServantPage";
-import ServantsPage from "./Page/ServantsPage";
-import SkillPage from "./Page/SkillPage";
+// import ServantPage from "./Page/ServantPage";
+// import ServantsPage from "./Page/ServantsPage";
+// import SkillPage from "./Page/SkillPage";
 import Manager from "./Setting/Manager";
 import {LanguageOption} from "./Setting/Option";
+import Loading from "./Component/Loading";
+
+const ServantPage = React.lazy(() => import("./Page/ServantPage"));
+const ServantsPage = React.lazy(() => import("./Page/ServantsPage"));
+const SkillPage = React.lazy(() => import("./Page/SkillPage"));
 
 interface IState {
     language: LanguageOption,
@@ -88,7 +93,11 @@ class App extends React.Component<any, IState> {
                             const region = props.match.params.region,
                                 id = props.match.params.id,
                                 key = `${region}-${id}`;
-                            return <ServantPage key={key} region={region} id={id}/>;
+                            return (
+                                <Suspense fallback={<Loading />}>
+                                    <ServantPage key={key} region={region} id={id}/>;
+                                </Suspense>
+                            )
                         }}/>
                         <Route exact={true} path="/:region(JP|NA)/skill/:id([0-9]+)" render={props => {
                             const region = props.match.params.region,
@@ -106,7 +115,11 @@ class App extends React.Component<any, IState> {
                         }}/>
                         <Route exact={true} path="/:region(JP|NA)/servants" render={props => {
                             const region = props.match.params.region;
-                            return <ServantsPage key={region} region={region}/>;
+                            return (
+                                <Suspense fallback={<Loading />}>
+                                    <ServantsPage key={region} region={region}/>
+                                </Suspense>
+                            )
                         }}/>
                         <Route path="/" exact={true} render={props => {
                             return <HomePage/>;
